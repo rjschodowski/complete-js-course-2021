@@ -4,7 +4,7 @@
 
 //Object example
 
-// const aboutRj {
+// const = aboutRj {
 //     firstName: 'R.J.',
 //     lastName: 'Schodowski',
 //     age: 2021 - 1981,
