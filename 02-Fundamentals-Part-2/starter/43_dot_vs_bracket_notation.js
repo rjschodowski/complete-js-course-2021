@@ -1,28 +1,25 @@
 'use strict';
 
-const rj = {
-    firstName: 'R.J.',
-    lastName: 'Schodowski',
-    age: 39,
-    friends: ['Huri', 'David', 'Dan']
-};
-console.log(rj);
+// const rj = {
+//     firstName: 'R.J.',
+//     lastName: 'Schodowski',
+//     age: 39,
+//     friends: ['Huri', 'David', 'Dan']
+// };
+// console.log(rj);
 
 //The first way of getting a property: DOT NOTATION
-
 //So, to access my last name, do this:
 
-console.log(rj.lastName);
+// console.log(rj.lastName);
 
-//The second way is: BRACKETS NOTATION
+/*The second way is: BRACKETS NOTATION
 
-console.log(rj['lastName']);    /*
+console.log(rj['lastName']); */
 
-We can actually put any expression that we'd like, so we don't have to explicitly write the string here,
-
-but instead we can compute it from some operation because remember that an operation is basically an expression.
-
-So something that produces a value and so we can put that here, inside the brackets.
+/*We can actually put any expression that we'd like, so we don't have to explicitly write the string here,
+but instead we can compute it from some operation because an operation is basically an expression.
+We can put something that produces a value here, inside the brackets.
 
 */
 /*
@@ -30,16 +27,14 @@ So something that produces a value and so we can put that here, inside the brack
 imagine that we had a variable in which we store the repeating part in first name and last name (ie: name).
 So we have name here in both. Let's store just that inside of a variable.
 */
-const nameKey = 'Name';  //Now we can use that variable to get both the first and the last name.
-console.log(rj['first' + nameKey]);
-console.log(rj['last' + nameKey]);
+// const nameKey = 'Name';  //Now we can use that variable to get both the first and the last name.
+// console.log(rj['first' + nameKey]);
+// console.log(rj['last' + nameKey]);
 
 /*
 
 So what will happen here is that as JavaScript sees this line of code, it will start by executing this plus operation
-
 and it will create a string first name. And then it will go to the rj object and retrieve that property. And the same
-
 will happen for the last name here and the second line of code. And that's how we get R.J. and Schodowski.
 
 */
@@ -51,7 +46,6 @@ will happen for the last name here and the second line of code. And that's how w
 /*
 
 When we need to first compute the property name, like we did here with the first and last name, then we have to use the
-
 bracket notation. In any other case, just use the dot notation.
 
 */
@@ -65,8 +59,10 @@ Let's say that we don't know yet which property we want to show, and instead we 
 user interface. For that we can use the prompt function.
 */
 
-const interestedIn = prompt('What do you want to know about R.J.? Choose between firstName, lastName, age, and friends');
-console.log(interestedIn);  //the prompt shows up, and when typing in one of these options, it renders the option name,
+// const interestedIn = prompt('What do you want to know about R.J.? Choose between firstName, lastName, age, and friends');
+// console.log(interestedIn);
+
+//the prompt shows up, and when typing in one of these options, it renders the option name,
 //such as firstName, age, etc.
 
 //To get the prompt to return an actual value from the object, we need to use BRACKET NOTATION. (Dot notation won't work).
@@ -81,4 +77,40 @@ here, which in this case will be interestedIn. JavaScript will now come here and
 value of the variable. That's the one that will be looked up on the rj object.
 */
 
-console.log(rj[interestedIn]);
+// console.log(rj[interestedIn]);
+
+//Let's regroup all the above code and set it up now so if you enter a value not listed, you'll receive an error message.
+
+const rj = {
+    firstName: 'R.J.',
+    lastName: 'Schodowski',
+    age: 39,
+    friends: ['Huri', 'David', 'Dan']
+};
+console.log(rj);
+
+console.log(rj.lastName);
+console.log(rj['lastName']);
+
+const nameKey = 'Name';  //Now we can use that variable to get both the first and the last name.
+console.log(rj['first' + nameKey]);
+console.log(rj['last' + nameKey]);
+
+const interestedIn = prompt('What do you want to know about R.J.? Choose between firstName, lastName, age, and friends');
+console.log(interestedIn);
+
+if (rj[interestedIn]) {
+    console.log(rj[interestedIn]);
+} else {
+    console.log('Wrong request. Please choose between firstName, lastName, age, and friends.');
+    alert('Wrong request. Please choose between firstName, lastName, age, and friends.');
+}
+
+rj.location = 'Michigan';
+rj.twitter = '@RJSchodowski';
+console.log(rj);
+
+//CHALLENGE: Code "R.J. has 3 friends and his best friend is David."
+console.log(`${rj.firstName} has ${rj.friends.length} friends and his best friend is ${rj.friends[1]}`);
+//Now code: "R.J. has 3 friends and his friends are Huri, David, and Dan."
+console.log(`${rj.firstName} has ${rj.friends.length} friends and his friends are ${rj.friends[0]}, ${rj.friends[1]}, and ${rj.friends[2]}.`);
