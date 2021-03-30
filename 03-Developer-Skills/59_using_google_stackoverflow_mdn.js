@@ -37,24 +37,24 @@ for (let i = 1; i < testArrayLength; ++i) {
 }
 I'm not going to copy and paste it, but use it to add to my function. Something like this:*/
 
-const temperatures = [3, -2, -6, -1, 'error', 9, 13, 17, 15, 14, 9, 5];
+// const temperatures = [3, -2, -6, -1, 'error', 9, 13, 17, 15, 14, 9, 5];
 
-const calcTempAmplitude = function (temps) {
-    let min = temps[0];
-    let max = temps[0];
+// const calcTempAmplitude = function (temps) {
+//     let min = temps[0];
+//     let max = temps[0];
 
-for (let i = 0; i < temps.length; i++) {
-    const curTemp = temps[i];
-    if(typeof curTemp !== 'number') continue;
-    if(curTemp > max) max = curTemp;
-    if(curTemp < min) min = curTemp;
-    }
-console.log(max, min);
-return max - min;
-};
+// for (let i = 0; i < temps.length; i++) {
+//     const curTemp = temps[i];
+//     if(typeof curTemp !== 'number') continue;
+//     if(curTemp > max) max = curTemp;
+//     if(curTemp < min) min = curTemp;
+//     }
+// console.log(max, min);
+// return max - min;
+// };
 
-const amplitude = calcTempAmplitude(temperatures);
-console.log(amplitude);
+// const amplitude = calcTempAmplitude(temperatures);
+// console.log(amplitude);
 /*
 Here's what this function is doing:
 So in the beginning, before we even start a loop, the max will be the first element of the array. So three, okay?
@@ -85,4 +85,31 @@ No, it's not. And so nothing happens and then we're done. And so the result in t
 
 //Breaking up into subproblems:
 //We must merge two arrays
+
+/*
+Code found from MDN that we'll borrow from to solve our problem:
+const array1 = ['a', 'b', 'c'];
+const array2 = ['d', 'e', 'f'];
+const array3 = array1.concat(array2);
+*/
+const calcTempAmplitudeNew = function (t1, t2) {
+    const temps = t1.concat(t2);
+    console.log(temps);
+
+    let min = temps[0];
+    let max = temps[0];
+
+for (let i = 0; i < temps.length; i++) {
+    const curTemp = temps[i];
+    if(typeof curTemp !== 'number') continue;
+    if(curTemp > max) max = curTemp;
+    if(curTemp < min) min = curTemp;
+    }
+console.log(max, min);
+return max - min;
+};
+
+const amplitudeNew = calcTempAmplitudeNew([3, 5, 1], [9, 0, 5]);
+console.log(amplitudeNew);
+
 
