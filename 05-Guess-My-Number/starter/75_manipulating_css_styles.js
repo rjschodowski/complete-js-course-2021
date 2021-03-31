@@ -18,8 +18,8 @@ document.querySelector('.check').addEventListener('click', function () {
 //When player wins
     } else if (guess === secretNumber) {
          document.querySelector('.message').textContent = 'You guessed, you wizard, you!';
-         document.querySelector('body').style.backgroundColor = '#60b347';
-         document.querySelector('.number').style.width = '30rem';
+         document.querySelector('body').style.backgroundColor = '#60b347'; //here we changed the background color
+         document.querySelector('.number').style.width = '30rem';  //here we changed the number's box width
 
 //When guess is too high    
     } else if (guess > secretNumber) {
