@@ -1,28 +1,48 @@
 'use strict';
 
-//Note that real-life code shouldn't be this confusing; this is just an example to understand scoping
+// console.log(me); //var was hoisted, but to undefined
+// console.log(job); //error-cannot be accessed before initialization
+// console.log(year); //error-cannot be accessed before initialization
 
-function calcAge(birthYear) {
-	const age = 2037 - birthYear;
-	
+// var me = 'Jonas';
+// let job = 'teacher';
+// const year = 1991;
 
-	function printAge() {
-		let output = `${firstName}, You are ${age}, born in the year of ${birthYear}.`
-		console.log(output);
+//Functions
 
-		if (birthYear >= 1981 && birthYear <=1996) {
-			//Creating new variable with same name as outer scope's variable
-			const firstName = 'R.J.';
-			//Reassigning outer scope's variable
-			output = 'New output!!';
-			const str = `Oh, and you're a millenial, ${firstName}.`;
-			console.log(str);
-		};
-	}
+// console.log(addDecl(2, 3)); //able to call it before it was defined in the code.
+// console.log(addExpr(2, 3)); //Error-cannot access before initialization
+// console.log(addArrow(2, 3)); //Error-cannot access before initialization
 
-	printAge();
-	return age;
-}
+// function addDecl(a, b) {
+// 	return a + b;
+// }
 
-const firstName = 'Jonas';
-calcAge(1991);
+// const addExpr = function (a, b) {
+// 	return a + b;
+// }
+
+// const addArrow = (a, b) => a + b;
+
+
+//Example
+
+if (!numProducts) deleteShoppingCart;
+
+var numProducts = 10; //numProducts here is 'undefined' due to hoisting
+
+function deleteShoppingCart() {
+	console.log('All items are deleted!');
+} 
+
+//Var variables are properties of the 'window' object, but not const or let. Var variables will create a property
+//on the global window object.
+//And that can have some implications in some cases.
+
+var x = 1;
+let y = 2;
+const z = 3;
+
+console.log(window.x); //True
+console.log(window.y); //False
+console.log(window.z);  //False
