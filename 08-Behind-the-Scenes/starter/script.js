@@ -1,48 +1,74 @@
 'use strict';
 
-// console.log(me); //var was hoisted, but to undefined
-// console.log(job); //error-cannot be accessed before initialization
-// console.log(year); //error-cannot be accessed before initialization
+// console.log(this); //Globally 'this' is a window object
 
-// var me = 'Jonas';
-// let job = 'teacher';
-// const year = 1991;
+const calcAge = function (birthYear) {
+	console.log(2037 - birthYear);
+	// console.log(this);
+};
 
-//Functions
+calcAge(1981);
 
-// console.log(addDecl(2, 3)); //able to call it before it was defined in the code.
-// console.log(addExpr(2, 3)); //Error-cannot access before initialization
-// console.log(addArrow(2, 3)); //Error-cannot access before initialization
+//Arrow functions have no 'this' keyword, so in this case 'this' is global scope and returns the window object
+const calcArrow = birthYear => {
+	console.log(2037 - birthYear);
+	// console.log(this);
+}
 
-// function addDecl(a, b) {
-// 	return a + b;
-// }
+const rj = {
+	year: 1981,
+	calcAge: function () {
+		// console.log(this);
+		console.log(2037 - this.year);
+	},
 
-// const addExpr = function (a, b) {
-// 	return a + b;
-// }
+};
 
-// const addArrow = (a, b) => a + b;
+rj.calcAge();
+
+/*
+Important information regarding 'this' for this example:
 
 
-//Example
 
-if (!numProducts) deleteShoppingCart;
+So I keep saying that the this keyword will point
 
-var numProducts = 10; //numProducts here is 'undefined' due to hoisting
+to the object that is calling the method, right?
 
-function deleteShoppingCart() {
-	console.log('All items are deleted!');
-} 
+And that means that the this keyword will not simply point
 
-//Var variables are properties of the 'window' object, but not const or let. Var variables will create a property
-//on the global window object.
-//And that can have some implications in some cases.
+at the object in which we wrote the method.
 
-var x = 1;
-let y = 2;
-const z = 3;
+So here we wrote the calcAge method inside
 
-console.log(window.x); //True
-console.log(window.y); //False
-console.log(window.z);  //False
+of the 'rj' object.
+
+And so we might think
+
+that that is the reason why the this keyword points
+
+to 'rj', but that is not true.
+
+The reason that the this keyword will point
+
+to 'rj' in this case is
+
+because 'rj' was the object calling that method
+
+and that's a subtle, but very important difference.
+*/
+
+const matilda = {
+	year: 2017
+};
+
+matilda.calcAge = rj.calcAge;
+matilda.calcAge();
+
+
+//The 'this' keyword points to the object, which in this case is Matilda.
+
+/*
+So even though the method is written here inside of the rj object, the this keyword will still point to Matilda,
+if it is Matilda, who calls the method.
+*/
