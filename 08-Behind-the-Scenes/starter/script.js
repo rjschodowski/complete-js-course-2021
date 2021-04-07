@@ -1,74 +1,73 @@
-'use strict';
+// const rj = {
+// 	firstName: 'R.J.',
+// 	year: 1981,
+// 	calcAge: function () {
+// 		// console.log(this);
+// 		console.log(2037 - this.year);
+// 	},
+// 	greet: () => console.log(`Hey ${this.firstName}!`)  //Arrow functions do not have their own 'this' keyword, hence the 'undefined' return in the console.
 
-// console.log(this); //Globally 'this' is a window object
+// };
+// rj.greet();  // rj is an object, and it is global. Therefore, 'this' right now is global, and this.firstName doesn't exist, hence the 'undefined' return.
 
-const calcAge = function (birthYear) {
-	console.log(2037 - birthYear);
-	// console.log(this);
-};
+//You should never EVER use an arrow function as a method.
 
-calcAge(1981);
 
-//Arrow functions have no 'this' keyword, so in this case 'this' is global scope and returns the window object
-const calcArrow = birthYear => {
-	console.log(2037 - birthYear);
-	// console.log(this);
-}
+
+//Another pitfall is when we have a function inside a method:
 
 const rj = {
+	firstName: 'R.J.',
 	year: 1981,
 	calcAge: function () {
 		// console.log(this);
 		console.log(2037 - this.year);
-	},
 
+//Solution 1
+
+// const self = this;  //self or that
+// const isMillenial = function () {
+// 	console.log(self.year >= 1981 && self.year <= 1996);
+// };
+
+//Solution 2
+//The arrow function uses the 'this' keyword from its parent scope (its parent is calcAge, and calcAge's parent scope is Jonas).
+//So in this case, the 'this' keyword is Jonas.
+//Bottom line: An arrow function inherits the 'this' keyword from the parent scope.
+
+//!!**&**This is a very useful case of when to use an arrow function**&**!!
+
+const isMillenial =  () => {
+	console.log(this);
+	console.log(this.year >= 1981 && this.year <= 1996);
 };
 
+isMillenial();
+
+	},
+greet: () => console.log(`Hey ${this.firstName}!`)  //Arrow functions do not have their own 'this' keyword, hence the 'undefined' return in the console.
+
+};
+rj.greet();
 rj.calcAge();
 
 /*
-Important information regarding 'this' for this example:
-
-
-
-So I keep saying that the this keyword will point
-
-to the object that is calling the method, right?
-
-And that means that the this keyword will not simply point
-
-at the object in which we wrote the method.
-
-So here we wrote the calcAge method inside
-
-of the 'rj' object.
-
-And so we might think
-
-that that is the reason why the this keyword points
-
-to 'rj', but that is not true.
-
-The reason that the this keyword will point
-
-to 'rj' in this case is
-
-because 'rj' was the object calling that method
-
-and that's a subtle, but very important difference.
+ Functions also get access to an arguments keyword. So not just the this keyword, but also an arguments keyword.
+Now, just like the this keyword, the arguments keyword is only available in regular functions.
 */
 
-const matilda = {
-	year: 2017
+//Arguments keyword
+
+const addExpr = function (a, b) {
+	console.log(arguments);
+	return a + b;
 };
 
-matilda.calcAge = rj.calcAge;
-matilda.calcAge();
+addExpr(2, 5);
+addExpr(2, 5, 8, 12); //This is totally legal to do
 
+const addArrow = (a, b) => {
+console.log(arguments);
+return a + b;
 
-//The 'this' keyword points to the object, which in this case is Matilda.
-
-/*
-So even though the method is written here inside of the rj object, the this keyword will still point to Matilda,
-if it is Matilda, who calls the method.
-*/
+addArrow(2,5,8,12); //This won't work because the 'arguments' keyword only exists in regular functions, not arrow functions.
