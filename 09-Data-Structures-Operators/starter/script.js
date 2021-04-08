@@ -1,15 +1,7 @@
-//Spread operator
+//REST PATTERN AND PARAMETERS
 
-//The spread operator is used to expand an array into all its elements. Basically, unpacking an array's elements at once.
 
-const arr = [7, 8, 9];
 
-const newArr = [1, 2, ...arr];
-console.log(newArr);
-
-/*we can use the spread operator whenever we would otherwise write multiple values separated by commas.*/
-
-//Here an example of using the spread operator with the restaurant object we've been working with:
 
 const restaurant = {
   name: 'Classico Italiano',
@@ -41,71 +33,90 @@ const restaurant = {
 
   orderPasta: function (ing1, ing2, ing3) {
     console.log(`Here is your tasty pasta with ${ing1}, ${ing2}, and ${ing3}.`);
+  },
+  orderPizza: function (mainIngredient, ...otherIngredients) {        //Rest operator example here for ordering pizza
+    console.log(mainIngredient);
+    console.log(otherIngredients);
   }
 };
 
-//Here we are adding an item to the main menu:
-
-const newMenu = [...restaurant.mainMenu, 'Gnocchi'];
-console.log(newMenu);
-
-//By using a spread operator, we are writing a new array by adding another element to the current array
-
-
-//IMPORTANT TO REMEMBER
-/* Now you might have noticed that the spread operator is actually a bit similar to destructuring, because it also helps us
-get elements out of arrays.
-
-Now, the big difference is that the spread operator takes all the elements from the array and it also doesn't create new
-variables.
-
-As a consequence, we can only use it in places where we would otherwise write values separated by commas.*/
+//Whereas spread operator takes values out of arrays, rest patterns uses the same syntax, but packs elements INTO an array.
 
 
 
-//Copy array
+//DESTRUCTURING
 
-const mainMenuCopy = [...restaurant.mainMenu];
+//Rest operator arrays example
 
-//Join 2 or more arrays together
+const arr = [1, 2, ...[3, 4]]; //SPREAD operator because on right side of the =
 
-const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
-console.log(menu);  
+const [a, b, ...others] = [1, 2, 3, 4, 5]; //REST operator because it is on the left side of the =
+console.log(a, b, others);
 
+const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
 
-//The spread operator works on iterables are arrays, strings, maps, sets, but NOT objects.
-
-//Let's try it on a string:
-
-const str = 'Roberto';
-const letters = [...str, ' ', 'S.'];
-console.log(letters);
-
-//IMPORTANT TO REMEMBER: we can only use the spread operator when building an array, or when we pass values into a function.
+console.log(pizza, risotto, otherFood);
 
 
-//Let's now write our own function that accepts multiple arguments and then use the spread operator to actually pass those
-//arguments.
+//The REST element must be the last element in the destructuring assignment...otherwise, how would JavaScript know until
+//when it should collect the rest of the array?
 
 
-//Real-world example
+//Rest operator objects example
 
-// const ingredients = [prompt('Let\'s make pasta! Ingredient 1?'), prompt('Let\'s make pasta! Ingredient 2?'), prompt('Let\'s make pasta! Ingredient 3?')];
-
-// console.log(ingredients);
-
-// restaurant.orderPasta(...ingredients);  //This is so much easier than calling it like restaurant.orderPasta(ingredient[0], etc)
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
 
 
-//Objects
 
-const newRestaurant = {founded: 1998, ...restaurant, founder: 'Gio Farina'};
-console.log(newRestaurant);
+//FUNCTIONS  (rest parameters)
 
-const restaurantCopy = { ...restaurant };
-restaurantCopy.name = 'Ristorante Bambini';
-console.log(restaurant.name);
-console.log(restaurantCopy.name); //This shows we can make a copy of an object and even change property values.
+//Let's start with a simple 'add' function
+
+// const add = function(...numbers) {
+//   console.log(numbers);
+// }
+
+// add(2, 3);
+// add(5, 3, 7, 2);
+// add(5, 4, 3, 7, 8, 9, 4, 1, 2, 1, 9, 7);  //each of these parameters are placed into arrays using REST operator with parameters
+
+//Now let's complete the function and add up these numbers
+
+const add = function(...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
+  console.log(sum);
+}
+
+add(2, 3);
+add(5, 3, 7, 2);
+add(5, 4, 3, 7, 8, 9, 4, 1, 2, 1, 9, 7);
+
+const x = [23, 5, 7];
+add(...x);
+
+//Rest operator example with ordering pizza
+restaurant.orderPizza('mushrooms', 'pepperoni', 'onions', 'extra cheese', 'spinach');
 
 
+
+/*IN SUMMARY
+
+
+So the spread operator is used
+
+where we would otherwise write values, separated by a comma.
+
+On the other hand the rest pattern is basically used
+
+where we would otherwise write variable names
+
+separated by commas.
+
+So, again the rest pattern can be used
+
+where we would write variable names, separated by commas
+
+and not values separated by commas.*/
 
