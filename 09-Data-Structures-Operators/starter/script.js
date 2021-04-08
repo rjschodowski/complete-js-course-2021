@@ -1,39 +1,9 @@
 'use strict'
 
-//SHORT CICUITING
+//Nullish Coalescing Operator
 
-//the || and && uses ANY data type, return ANY data type, and does short-cicuiting
-
-
-
-console.log('-------------------OR OPERATOR-----------------------------')
-
-
-console.log(3 || 'R.J.'); //returns 3 in the console. (|| doesn't always have to be a true/false boolean)
-
-/*So in this example for short circuiting,
-
-in the case of the || operator,
-
-short circuiting means that if the first value
-
-is a truthy value,
-
-it will immediately return that first value.
-
-So that's exactly what we see here
-
-with the three which is a truthy value. The other operand will not even be evaluated. This is
-
-what is referred to as SHORT CICUITING*/
-
-console.log('' || 'R.J.');  //answer: R.J.
-console.log(true || 0); //answer: true
-console.log(undefined || null); //answer: null, even though undefined and null are both falsy.
-
-//Another example:
-
-console.log(undefined || 0 || '' || 'Hola' || 23 || null); //Hola returns because it's the first truthy value
+//There is a problem with the number of guests if the number is zero. As shown below, when using the || shortcircuit, the
+//result is 10 instead of 0. There is a solution to this type of problem below...
 
 
 //Restaurant example//
@@ -75,78 +45,31 @@ const restaurant = {
   }
 };
 
-//Let's say that there might be a property on the restaurant object with the number of guests, but we don't know if it exists.
-//We want to basically define a variable based on this number of guests. And we want to set a default value if this doesn't
-//exist. Like this:
+console.log('---------------HERE IS THE PROBLEM------------------------------');
 
-restaurant.numGuests = 54;
-const guests1 = restaurant.numGuests ? restaurant.numGuests: 10;
-// console.log(guests1); //Console prints 10, the default value, since numGuests wasn't it the restaurant object and is therefore
-//undefined.
+restaurant.numGuests = 0;
+const guests = restaurant.numGuests || 10;
+console.log(guests); //console prints 10 instead of 0.
 
-//Here's a simpler way of doing it:
-const guests2 = restaurant.numGuests || 10;
-// console.log(guests2);
-//As above, since numGuests is undefined, 10 is the selected default value
+ console.log('---------------HERE IS THE SOLUTION------------------------------');
 
-//But let's say we do add a numeric value to numGuests, like 54. We'll add this above the const guests1 line.
-//Which value will be first to be truthy?
+ const guestCorrect = restaurant.numGuests ?? 10;
+ console.log(guestCorrect);
 
-console.log(guests1, guests2); //The answer is 54, because now that it is defined, it is the first truthy value. Note that
-//if numGuests = 0, it will not work because 0 is falsy.
+/*So why does this work? It is because the nullish coalescing operator
 
-console.log('-------------------AND OPERATOR-----------------------------')
+works with the idea or with the concept
 
+of nullish values instead of falsy values.
 
-//When it comes to short circuit evaluation, the AND operator works in the exact opposite way of the OR operator.
+And nullish values are null and undefined.
 
-//the AND operator short circuits, when the first value is falsy.
+That's it.*/
 
-console.log(0 && 'R.J.'); //0 prints to console since it's the first falsy value.
-
-//When both values are truthy, it means that the evaluation continues and then simply the last value is returned.
-
-console.log(7 && true);
-
-/*The AND operator is only true
-
-if all the operands are true.
-
-And so, if the first one here is false,
-
-then it means that the entire result of the AND operation
-
-will already be false anyway.
-
-And so there is no need to even look
-
-at any of the other operands.*/
-
-console.log('Hello'&& 89 && null && 'R.J.'); //null returns to the console here. Why?
-
-/* Null is a falsy value
-
-and therefore evaluation no longer needs to continue
-
-because at this point, the whole result
-
-of the end operation is gonna be false anyway.
-
-And then as a result,
-
-this is then simply the value that's gonna be returned
-
-and it's short circuits the rest of the evaluation.*/
+//NULLISH VALUES = null and undefined (NOT 0 or '')
 
 
-//Now for a practical example 
 
-if (restaurant.orderPizza) {
-  restaurant.orderPizza('extra cheese', 'onions');
-};  //Here we are checking to see if orderPizza exists. 
 
-//Here we are doing the same thing, but with the && operator instead
-
-restaurant.orderPizza && restaurant.orderPizza('extra cheese', 'onions');
 
 
