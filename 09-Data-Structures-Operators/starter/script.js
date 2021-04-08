@@ -1,13 +1,16 @@
-'use strict';
+//Spread operator
 
+//The spread operator is used to expand an array into all its elements. Basically, unpacking an array's elements at once.
 
-//Destructuring Objects
+const arr = [7, 8, 9];
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+const newArr = [1, 2, ...arr];
+console.log(newArr);
 
-// Data needed for first part of the section
+/*we can use the spread operator whenever we would otherwise write multiple values separated by commas.*/
+
+//Here an example of using the spread operator with the restaurant object we've been working with:
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -35,73 +38,74 @@ const restaurant = {
   orderDelivery: function ({ starterIndex, mainIndex, time, address}) {
     console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}. Watch for the flashy schoolbus!`);
   },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here is your tasty pasta with ${ing1}, ${ing2}, and ${ing3}.`);
+  }
 };
-  restaurant.orderDelivery({
-    time: '22:30',
-    address: '123 Sesame Drive',
-    mainIndex: 2,
-    starterIndex: 2,
-  });
+
+//Here we are adding an item to the main menu:
+
+const newMenu = [...restaurant.mainMenu, 'Gnocchi'];
+console.log(newMenu);
+
+//By using a spread operator, we are writing a new array by adding another element to the current array
 
 
-//This is an example of how you destructure an object. Note that the order of properties turned to variables does not matter.
-const {name, openingHours, categories} = restaurant;
-console.log(name, openingHours, categories);
+//IMPORTANT TO REMEMBER
+/* Now you might have noticed that the spread operator is actually a bit similar to destructuring, because it also helps us
+get elements out of arrays.
 
-//Destructuring an object can be very useful, especially when working with API data.
+Now, the big difference is that the spread operator takes all the elements from the array and it also doesn't create new
+variables.
 
-//Example of assigning properties new names:
-
-const {name: restaurantName, openingHours: hours, categories: tags} = restaurant;
-console.log(restaurantName, hours, tags);
-
-//Example of setting default value if we get code from somewhere else that isn't coded in for us already.
-
-const { menu = [], starterMenu: starters = [] } = restaurant
-console.log(menu, starters); //Menu is set to a default so it can be filled in with data later. Starters retrieves the data that is already coded within the object.
+As a consequence, we can only use it in places where we would otherwise write values separated by commas.*/
 
 
-//Mutating variables while destructuring objects
 
-let a = 111;
-let b = 999;
-const obj = {a: 23, b: 7, c: 14};
+//Copy array
 
-({a, b} = obj);
-console.log(a, b);  //Here we mutated a from 111 to 23, and b from 999 to 7
+const mainMenuCopy = [...restaurant.mainMenu];
+
+//Join 2 or more arrays together
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu);  
 
 
-//Nested objects
+//The spread operator works on iterables are arrays, strings, maps, sets, but NOT objects.
 
-// const { fri } = openingHours;
-// console.log(fri);   //We are retrieving information (Friday's opening hours), which is nested withint openingHours. 
-//OpeningHours is also nested in the restaurant parent object. 
+//Let's try it on a string:
 
-//Now let's try to extract Friday's open and close properties:
+const str = 'Roberto';
+const letters = [...str, ' ', 'S.'];
+console.log(letters);
 
-// const { fri: { open, close } } = openingHours;
-// console.log(open, close);
+//IMPORTANT TO REMEMBER: we can only use the spread operator when building an array, or when we pass values into a function.
 
-//If you wanted to reassign values to these properties, you could do this (as an example):
 
-const { fri: { open: o, close: c } } = openingHours;
-console.log(open, close);
+//Let's now write our own function that accepts multiple arguments and then use the spread operator to actually pass those
+//arguments.
 
-/*So many times in JavaScript,
 
-we have functions with a lot of parameters.
+//Real-world example
 
-But then it can be hard to know the order of parameters
+// const ingredients = [prompt('Let\'s make pasta! Ingredient 1?'), prompt('Let\'s make pasta! Ingredient 2?'), prompt('Let\'s make pasta! Ingredient 3?')];
 
-for someone that is using this function.
+// console.log(ingredients);
 
-And so instead of defining the parameters manually,
+// restaurant.orderPasta(...ingredients);  //This is so much easier than calling it like restaurant.orderPasta(ingredient[0], etc)
 
-we can just pass an object into the function as an argument,
 
-and the function will then immediately destructure
+//Objects
 
-that object.*/
+const newRestaurant = {founded: 1998, ...restaurant, founder: 'Gio Farina'};
+console.log(newRestaurant);
 
-//Example (orderDelivery function. See above for the inserted function code)...
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Bambini';
+console.log(restaurant.name);
+console.log(restaurantCopy.name); //This shows we can make a copy of an object and even change property values.
+
+
 
