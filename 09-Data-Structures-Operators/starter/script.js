@@ -1,7 +1,42 @@
-//REST PATTERN AND PARAMETERS
+'use strict'
+
+//SHORT CICUITING
+
+//the || and && uses ANY data type, return ANY data type, and does short-cicuiting
 
 
 
+console.log('-------------------OR OPERATOR-----------------------------')
+
+
+console.log(3 || 'R.J.'); //returns 3 in the console. (|| doesn't always have to be a true/false boolean)
+
+/*So in this example for short circuiting,
+
+in the case of the || operator,
+
+short circuiting means that if the first value
+
+is a truthy value,
+
+it will immediately return that first value.
+
+So that's exactly what we see here
+
+with the three which is a truthy value. The other operand will not even be evaluated. This is
+
+what is referred to as SHORT CICUITING*/
+
+console.log('' || 'R.J.');  //answer: R.J.
+console.log(true || 0); //answer: true
+console.log(undefined || null); //answer: null, even though undefined and null are both falsy.
+
+//Another example:
+
+console.log(undefined || 0 || '' || 'Hola' || 23 || null); //Hola returns because it's the first truthy value
+
+
+//Restaurant example//
 
 const restaurant = {
   name: 'Classico Italiano',
@@ -40,83 +75,78 @@ const restaurant = {
   }
 };
 
-//Whereas spread operator takes values out of arrays, rest patterns uses the same syntax, but packs elements INTO an array.
+//Let's say that there might be a property on the restaurant object with the number of guests, but we don't know if it exists.
+//We want to basically define a variable based on this number of guests. And we want to set a default value if this doesn't
+//exist. Like this:
+
+restaurant.numGuests = 54;
+const guests1 = restaurant.numGuests ? restaurant.numGuests: 10;
+// console.log(guests1); //Console prints 10, the default value, since numGuests wasn't it the restaurant object and is therefore
+//undefined.
+
+//Here's a simpler way of doing it:
+const guests2 = restaurant.numGuests || 10;
+// console.log(guests2);
+//As above, since numGuests is undefined, 10 is the selected default value
+
+//But let's say we do add a numeric value to numGuests, like 54. We'll add this above the const guests1 line.
+//Which value will be first to be truthy?
+
+console.log(guests1, guests2); //The answer is 54, because now that it is defined, it is the first truthy value. Note that
+//if numGuests = 0, it will not work because 0 is falsy.
+
+console.log('-------------------AND OPERATOR-----------------------------')
 
 
+//When it comes to short circuit evaluation, the AND operator works in the exact opposite way of the OR operator.
 
-//DESTRUCTURING
+//the AND operator short circuits, when the first value is falsy.
 
-//Rest operator arrays example
+console.log(0 && 'R.J.'); //0 prints to console since it's the first falsy value.
 
-const arr = [1, 2, ...[3, 4]]; //SPREAD operator because on right side of the =
+//When both values are truthy, it means that the evaluation continues and then simply the last value is returned.
 
-const [a, b, ...others] = [1, 2, 3, 4, 5]; //REST operator because it is on the left side of the =
-console.log(a, b, others);
+console.log(7 && true);
 
-const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
+/*The AND operator is only true
 
-console.log(pizza, risotto, otherFood);
+if all the operands are true.
 
+And so, if the first one here is false,
 
-//The REST element must be the last element in the destructuring assignment...otherwise, how would JavaScript know until
-//when it should collect the rest of the array?
+then it means that the entire result of the AND operation
 
+will already be false anyway.
 
-//Rest operator objects example
+And so there is no need to even look
 
-const { sat, ...weekdays } = restaurant.openingHours;
-console.log(weekdays);
+at any of the other operands.*/
 
+console.log('Hello'&& 89 && null && 'R.J.'); //null returns to the console here. Why?
 
+/* Null is a falsy value
 
-//FUNCTIONS  (rest parameters)
+and therefore evaluation no longer needs to continue
 
-//Let's start with a simple 'add' function
+because at this point, the whole result
 
-// const add = function(...numbers) {
-//   console.log(numbers);
-// }
+of the end operation is gonna be false anyway.
 
-// add(2, 3);
-// add(5, 3, 7, 2);
-// add(5, 4, 3, 7, 8, 9, 4, 1, 2, 1, 9, 7);  //each of these parameters are placed into arrays using REST operator with parameters
+And then as a result,
 
-//Now let's complete the function and add up these numbers
+this is then simply the value that's gonna be returned
 
-const add = function(...numbers) {
-  let sum = 0;
-  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
-  console.log(sum);
-}
-
-add(2, 3);
-add(5, 3, 7, 2);
-add(5, 4, 3, 7, 8, 9, 4, 1, 2, 1, 9, 7);
-
-const x = [23, 5, 7];
-add(...x);
-
-//Rest operator example with ordering pizza
-restaurant.orderPizza('mushrooms', 'pepperoni', 'onions', 'extra cheese', 'spinach');
+and it's short circuits the rest of the evaluation.*/
 
 
+//Now for a practical example 
 
-/*IN SUMMARY
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('extra cheese', 'onions');
+};  //Here we are checking to see if orderPizza exists. 
 
+//Here we are doing the same thing, but with the && operator instead
 
-So the spread operator is used
+restaurant.orderPizza && restaurant.orderPizza('extra cheese', 'onions');
 
-where we would otherwise write values, separated by a comma.
-
-On the other hand the rest pattern is basically used
-
-where we would otherwise write variable names
-
-separated by commas.
-
-So, again the rest pattern can be used
-
-where we would write variable names, separated by commas
-
-and not values separated by commas.*/
 
