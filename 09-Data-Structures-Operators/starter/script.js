@@ -1,10 +1,12 @@
 'use strict'
 
-//SETS
+//MAPS
 
-//sets are collections of unique values.
+//datastructure to map values to keys. So, just like an object data is stored in key value pairs in maps.
 
-//Below, let's create a new 'order' set...
+//Now, the big difference between objects and maps is that in maps, the keys can have any type and this can be huge.
+
+//In objects keys are only strings, but in maps, they can be any type of key, even objects, arrays, or other maps.
 
 const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
 
@@ -66,35 +68,43 @@ const restaurant = {
   }
 };
 
-const orderSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza']);
-console.log(orderSet); //All duplicates are gone in the console. Only pasta, pizza, and risotto show.
+const rest = new Map();
+rest.set('name', 'Clasico Italiano');
+rest.set(1, 'Bari, Italia')
+console.log(rest.set(2, 'Rivisondoli, Italia'));
 
-//Arrays and strings are iterables
+//We can chain things together by calling the set method. For example:
 
-//You can pass in a new set:
-console.log(new Set('Roberto')); //each letter is its own string
+  rest.set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open!')
+  .set(false, 'We are closed!');
 
-//How to get the size of a set:
+  console.log(rest.get('name'));
+  console.log(rest.get(true));
 
-console.log(orderSet.size);
+  const time = 21;
+  console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //this returns a true boolean value, and
+  //since it is true and above true is set to 'We are open!', the console will print 'We are open!' Pretty clever.
 
-//How to check if something is in a set:
-console.log(orderSet.has('Pizza')); //console states 'true', so we know it is there.
+  //To check if a map has a certain key
 
-//How to add to a set:
-console.log(orderSet.add('garlic bread'));
-console.log(orderSet.add('garlic bread'));
+console.log(rest.has('categories')); //console reads true, so the map contains 'categories'
+rest.delete(2);
+console.log(rest); //here we deleted location #2 (the Rivisondoli location)
 
-//How to delete from a set:
-console.log(orderSet.delete('garlic bread'));
-// orderSet.clear(); //this deletes everything from the set.
-console.log(orderSet);
+console.log(rest.size) //this gives you the number of items (which is 7 for this map)
 
-//The main use of sets is to remove duplicate values
+rest.clear(); //to remove all elements from the map
 
-//How to retrieve data from a set
+console.log(rest);
 
-//example
-const staff = ['waiter', 'chef', 'waiter', 'manager', 'chef', 'waiter'];
-const staffUnique = [...new Set(staff)];
-console.log(staffUnique);
+
+rest.set([1, 2], 'test');
+console.log(rest);
+console.log(rest.size);
+
+rest.set(document.querySelector('h1'), 'heading');
+console.log(rest);
+
