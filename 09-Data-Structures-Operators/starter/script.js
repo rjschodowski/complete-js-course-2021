@@ -1,12 +1,8 @@
 'use strict'
 
-//MAPS
+//MAPS: Iteration
 
-//datastructure to map values to keys. So, just like an object data is stored in key value pairs in maps.
 
-//Now, the big difference between objects and maps is that in maps, the keys can have any type and this can be huge.
-
-//In objects keys are only strings, but in maps, they can be any type of key, even objects, arrays, or other maps.
 
 const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
 
@@ -68,43 +64,45 @@ const restaurant = {
   }
 };
 
-const rest = new Map();
-rest.set('name', 'Clasico Italiano');
-rest.set(1, 'Bari, Italia')
-console.log(rest.set(2, 'Rivisondoli, Italia'));
+const question = new Map([
+  ['question', 'What is the best programming language?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct!'],
+  [false, 'Try again!'],
+]);
 
-//We can chain things together by calling the set method. For example:
-
-  rest.set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
-  .set('open', 11)
-  .set('close', 23)
-  .set(true, 'We are open!')
-  .set(false, 'We are closed!');
-
-  console.log(rest.get('name'));
-  console.log(rest.get(true));
-
-  const time = 21;
-  console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); //this returns a true boolean value, and
-  //since it is true and above true is set to 'We are open!', the console will print 'We are open!' Pretty clever.
-
-  //To check if a map has a certain key
-
-console.log(rest.has('categories')); //console reads true, so the map contains 'categories'
-rest.delete(2);
-console.log(rest); //here we deleted location #2 (the Rivisondoli location)
-
-console.log(rest.size) //this gives you the number of items (which is 7 for this map)
-
-rest.clear(); //to remove all elements from the map
-
-console.log(rest);
+console.log(question);
 
 
-rest.set([1, 2], 'test');
-console.log(rest);
-console.log(rest.size);
+//Convert Objects to Maps
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
 
-rest.set(document.querySelector('h1'), 'heading');
-console.log(rest);
+
+//Iteration
+
+//Quiz app
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+  if(typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+// const answer = Number(prompt('Your answer'));
+const answer = 3; 
+console.log(answer);
+console.log(question.get(question.get('correct') === answer));
+
+
+//When we need to convert a map to an array
+
+console.log([...question]); //add the [] inside the console.log(), use the ... (spread operator) and voila, you get your array
+
+// console.log(question.entries());
+console.log([...question.keys()]);
+console.log([...question.values()]);
 
