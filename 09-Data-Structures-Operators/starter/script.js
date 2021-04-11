@@ -1,5 +1,8 @@
 'use strict'
-//Optional Chaining - If a certain property in an object doesn't exist, UNDEFINED is returned
+
+
+//LOOPING OBJECTS
+
 const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
 
 const openingHours = {
@@ -28,6 +31,10 @@ const openingHours = {
       open: 0,
       close: 24,
     },
+    [weekdays[6]]: {
+      open: 0,
+      close: 24,
+    }
   };
 
 const restaurant = {
@@ -56,59 +63,36 @@ const restaurant = {
   }
 };
 
-console.log(restaurant.openingHours.mon.open);
+//Object.keys - Looping over property names aka 'keys'. 
+
+//Here we are going to use the for/of loop to loop over the weekdays array
 
 
+//PROPERTY NAMES
 
-//OPTIONAL CHAINING
+const properties = Object.keys(openingHours);
+console.log(properties); //Here we get an array of the days of the week, which are the property names
 
-//We can check if a property exists before we call it.
+//So now we can compute how many days the restaurant is open:
 
-
-console.log(restaurant.openingHours.mon?.open); /*Here we are checking to see if 'mon' exists. So only if Monday exists,
-
-then this open property will be read from there. But if not, then immediately undefined will be returned.*/
-
-//You can check for multiple instances of optional chaining. For example:
-
-console.log(restaurant.openingHours?.mon?.open);
-  
-
-//Example
-
-
-const days = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
-
-/*what I want to do is to loop over this array and then log it to the console, whether the restaurant is open or closed
-
-on each of the days. We'll use a for/of loop to loop through the values (days of the week) of an iterable object
-
-(in this case, the 'days' array).*/
-
-for(const day of days) {
-  const open = restaurant.openingHours[day]?.open ?? 'closed';
-  console.log(`On ${day} we open at ${open}.`);
+let openStr = `We are open ${properties.length} days a week! `;
+for(const day of properties) {
+  openStr += `${day}, `;
 }
+  console.log(openStr);
 
 
-//Optional Chaining for Calling Methods
+  //PROPERTY VALUES
 
-//We can check if a method exists before we call it.
-
-//Here let's check if the order method exists:
-
-console.log(restaurant.order?.(0, 1) ?? 'Method does not exist.'); //Checking here to see if 'order' exists
+  const values = Object.values(openingHours)
+  console.log(values); //We get the values of open/close hours for each of the seven days of the week.
 
 
-//Optional Chaining for Calling Arrays
+  //PROPERTY ENTRIES (to get values and names, or rather, the entire objects)
 
-//We can check to see if an array is empty
+const entries = Object.entries(openingHours);
+console.log(entries);
 
-const users = [{name: 'R.J.', email: 'rjschodowski@rjscodes.com', age: 40}];
-
-console.log(users[0]?.name ?? 'User array empty.') //We're checking to see here if user [0] exists.
-
-
-/* Get used to this optional chaining operator because we almost always use it together with the nullish coalescing 
-operator */
-
+for(const [key, { open, close }] of entries) { //here we destructure to get the data we want from the properties turned variables
+  console.log(`On ${key} we open at ${open} and close at ${close}.`);
+}
