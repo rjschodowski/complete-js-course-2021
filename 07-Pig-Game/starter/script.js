@@ -17,7 +17,7 @@ let scores, currentScore, activePlayer, playing;
 
 //Starting conditionss
 const init = function() {
-    const scores = [0, 0]
+    scores = [0, 0]
     currentScore = 0;
     activePlayer = 0;
     playing = true;
