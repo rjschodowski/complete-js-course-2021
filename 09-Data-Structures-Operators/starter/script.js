@@ -1,85 +1,100 @@
 'use strict'
 
-/*Coding Challenge #2
-Let's continue with our football betting app! Keep using the 'game' variable from
-before.
-Your tasks:
-1. Loop over the game.scored array and print each player name to the console,
-along with the goal number (Example: "Goal 1: Lewandowski")
-2. Use a loop to calculate the average odd and log it to the console (We already
-studied how to calculate averages, you can go check if you don't remember)
-3. Print the 3 odds to the console, but in a nice formatted way, exactly like this:
-Odd of victory Bayern Munich: 1.33
-Odd of draw: 3.25
-Odd of victory Borrussia Dortmund: 6.5
-Get the team names directly from the game object, don't hardcode them
-(except for "draw"). Hint: Note how the odds and the game objects have the
-same property names 😉
-4. Bonus: Create an object called 'scorers' which contains the names of the
-players who scored as properties, and the number of goals as the value. In this
-game, it will look like this:
-{
-Gnarby: 1,
-Hummels: 1,
-Lewandowski: 2
-}
-GOOD LUCK 😀*/
+//SETS
 
-const game = {
-  team1: 'Bayern Munich',
-  team2: 'Borrussia Dortmund',
-  players: [
-  [
-  'Neuer',
-  'Pavard',
-  'Martinez',
-  'Alaba',
-  'Davies',
-  'Kimmich',
-  'Goretzka',
-  'Coman',
-  'Muller',
-  'Gnarby',
-  'Lewandowski',
-  ],
-  [
-  'Burki',
-  'Schulz',
-  'Hummels',
-  'Akanji',
-  'Hakimi',
-  'Weigl',
-  'Witsel',
-  'Hazard',
-  'Brandt',
-  'Sancho',
-  'Gotze',
-  ],
-  ],
-  score: '4:0',
-  scored: ['Lewandowski', 'Gnarby', 'Lewandowski',
-  'Hummels'],
-  date: 'Nov 9th, 2037',
-  odds: {
-  team1: 1.33,
-  x: 3.25,
-  team2: 6.5,
+//sets are collections of unique values.
+
+//Below, let's create a new 'order' set...
+
+const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+
+const openingHours = {
+
+  [weekdays[0]]: {
+    open: 12,
+    close: 22,
   },
+  [weekdays[1]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[2]]: {
+    open: 0,
+    close: 24,
+  },
+    [weekdays[3]]: {
+      open: 12,
+      close: 22,
+    },
+    [weekdays[4]]: {
+      open: 11,
+      close: 23,
+    },
+    [weekdays[5]]: {
+      open: 0,
+      close: 24,
+    },
+    [weekdays[6]]: {
+      open: 0,
+      close: 24,
+    }
   };
 
-//1.
-  for(const [i, player] of game.scored.entries())
-  console.log(`Goal ${i+1}: ${player}`);
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  //2.
-  let average = 0;
-  const odds = Object.values(game.odds);
-  for(const odd of odds) average += odd;
-  average /= odds.length;
-  console.log(average);
+  //ES6-enhanced object literals
+  openingHours,
+  order(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+  orderDelivery({ starterIndex, mainIndex, time, address}) {
+    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}. Watch for the flashy schoolbus!`);
+  },
 
-  //3.
-for(const [team, odd] of Object.entries(game.odds)) {
-  const teamStr = team === 'x' ? 'draw' : `Victory ${game[team]}`;
-  console.log(`Odd of ${teamStr} ${odd}.`)
-}
+  orderPasta(ing1, ing2, ing3) {
+    console.log(`Here is your tasty pasta with ${ing1}, ${ing2}, and ${ing3}.`);
+  },
+  orderPizza(mainIngredient, ...otherIngredients) {
+    return [this.main[mainIngredient], this.other[otherIngredients]];        
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  }
+};
+
+const orderSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza']);
+console.log(orderSet); //All duplicates are gone in the console. Only pasta, pizza, and risotto show.
+
+//Arrays and strings are iterables
+
+//You can pass in a new set:
+console.log(new Set('Roberto')); //each letter is its own string
+
+//How to get the size of a set:
+
+console.log(orderSet.size);
+
+//How to check if something is in a set:
+console.log(orderSet.has('Pizza')); //console states 'true', so we know it is there.
+
+//How to add to a set:
+console.log(orderSet.add('garlic bread'));
+console.log(orderSet.add('garlic bread'));
+
+//How to delete from a set:
+console.log(orderSet.delete('garlic bread'));
+// orderSet.clear(); //this deletes everything from the set.
+console.log(orderSet);
+
+//The main use of sets is to remove duplicate values
+
+//How to retrieve data from a set
+
+//example
+const staff = ['waiter', 'chef', 'waiter', 'manager', 'chef', 'waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
