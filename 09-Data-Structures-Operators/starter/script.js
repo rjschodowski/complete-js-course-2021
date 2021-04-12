@@ -1,72 +1,84 @@
 'use strict'
 
-//Working with Strings Pt. 1
+//Working with Strings Pt. 2
 
+
+//Changing the casing of a string
 
 const airline = 'TAP Air Portugal';
-const plane = 'A320'; 
 
-console.log(plane[0]);
-
-//Strings also have methods. Here are some of them:
-
-//Indexof
-
-console.log(airline.indexOf('r')); //returns 6, because r is positioned in the sixth place
-
-//To find the last occurrence of a letter in this case, use lastIndexOf:
-
-console.log(airline.lastIndexOf('r')); //returns 10
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
 
 
-//You can extract a part of a string using the slice method
+//Fix capitalization in a name
 
-console.log(airline.slice(4)); //returns Air Portugal since places 0-3 were deleted (TAP and ' ') and place 4
-//(A from Air) is where the string begins.
-
-//The new result is called a sub string, and it doesn't change the underlying original string, because it's not possible
-//to mutate strings because they are primitives.
-
-console.log(airline.slice(4, 7)); //Here we are setting a begin and end parameters for the string we are slicing.
-//This returns 'Air' because we start at space 4, which is A from Air, and we end at space 7, which is the space right after
-//the r from Air. So everything after Air is sliced off, just as everything before Air is also sliced off.
+const passenger = 'ROberT';
+const passengerLower = passenger.toLowerCase();  //To fix this we first make the name all lowercase
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1); //Then we take the first letter
+//and make it upper case 'R' and add to it the rest of the name 'obert'.
+console.log(passengerCorrect); //Boom!
 
 
-//Now let's try to extract the first word without hard coding the parameters
+//Comparing Emails
 
-console.log(airline.slice(0, airline.indexOf(' '))); //returns TAP
+const email = 'hello@rj.robot.com';
+const loginEmail = '  Hello@rj.roBot.com';
 
-//Now let's extract the last word
+const lowerEmail = loginEmail.toLowerCase();
+const trimmedEmail = lowerEmail.trim();
+console.log(trimmedEmail); //Fixed!
 
-console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //returns the last word: Portugal
+//Here's an even better way to do that in one line of code:
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+
+console.log(normalizedEmail);
 
 
-//You can also use negative values for slicing. The result will be that it will take off from the end of the string.
-//Example:
+//Replacing parts of strings
 
-console.log(airline.slice(-1)); //returns 'l' from Portugal...the last letter.
-console.log(airline.slice(1, -1)); //returns AP Air Portuga...1 slices off T and -1 slices off l
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+
+console.log(priceUS);
 
 
-const checkMiddleSeat = function (seat) {
-  //B and E are middle seats
-  const s = seat.slice(-1);
-  if(s === 'B' || s === 'E')
-  console.log('You got the middle seat...meh!');
-  else console.log('You got lucky!');
+const announcement = 'All passengers come to door 23. Door 23!';
+console.log(announcement.replace('door', 'gate'));
+
+//For now we'll use a regular expression so that all instances of 'door' will convert to 'gate'
+//Soon replaceAll will be a method we can use to do the same thing, but as of 4/12/21 it doesn't work yet.
+
+console.log(announcement.replace(/door/g, 'gate'));
+
+
+//Booleans
+const plane = 'A320neo';
+console.log(plane.includes('A320'));  //true
+console.log(plane.includes('Boeing'));  //we see this is false, since Boeing is not in the plane name.
+
+console.log(plane.startsWith('Air')); //returns false because the string doesn't start with 'Air'
+
+if(plane.startsWith('A') && plane.endsWith('neo')) {
+  console.log('Part of the NEO family.');
 }
 
-checkMiddleSeat('11B');
-checkMiddleSeat('23C');
-checkMiddleSeat('3E');
 
+//Practice exercise
 
-//If you wonder why these primitive strings have methods, it's because JS converts the strings to objects, which can 
-//then execute methods. Then, when the method's operation is completed, JS converts it back to a string.
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed to board this plane.');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
 
-
-
-
-
+checkBaggage('I got a laptop, Food, and Pocket Knife.');
+checkBaggage('Socks and a camera.');
+checkBaggage('Snacks and a gun.');
 
 
