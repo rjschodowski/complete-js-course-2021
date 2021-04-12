@@ -1,108 +1,113 @@
 'use strict'
 
-//MAPS: Iteration
+//Data Structures Summary: Which One Should I Use? Pros and Cons of Each 4 Data Structure
+
+
+//Sources of data come from:
+  //From the program itself: data written directly into the source code 
+  //From the UI: data input from the user
+  //From external sources: data fetched from web APIs
+
+//We use data structures to store this data
 
 
 
-const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
-
-const openingHours = {
-
-  [weekdays[0]]: {
-    open: 12,
-    close: 22,
-  },
-  [weekdays[1]]: {
-    open: 11,
-    close: 23,
-  },
-  [weekdays[2]]: {
-    open: 0,
-    close: 24,
-  },
-    [weekdays[3]]: {
-      open: 12,
-      close: 22,
-    },
-    [weekdays[4]]: {
-      open: 11,
-      close: 23,
-    },
-    [weekdays[5]]: {
-      open: 0,
-      close: 24,
-    },
-    [weekdays[6]]: {
-      open: 0,
-      close: 24,
-    }
-  };
-
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-
-  //ES6-enhanced object literals
-  openingHours,
-  order(starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
-  orderDelivery({ starterIndex, mainIndex, time, address}) {
-    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}. Watch for the flashy schoolbus!`);
-  },
-
-  orderPasta(ing1, ing2, ing3) {
-    console.log(`Here is your tasty pasta with ${ing1}, ${ing2}, and ${ing3}.`);
-  },
-  orderPizza(mainIngredient, ...otherIngredients) {
-    return [this.main[mainIngredient], this.other[otherIngredients]];        
-    console.log(mainIngredient);
-    console.log(otherIngredients);
-  }
-};
-
-const question = new Map([
-  ['question', 'What is the best programming language?'],
-  [1, 'C'],
-  [2, 'Java'],
-  [3, 'JavaScript'],
-  ['correct', 3],
-  [true, 'Correct!'],
-  [false, 'Try again!'],
-]);
-
-console.log(question);
+//How do we decide between which data structure to use?
 
 
-//Convert Objects to Maps
-console.log(Object.entries(openingHours));
-const hoursMap = new Map(Object.entries(openingHours));
-console.log(hoursMap);
+
+/*Ask yourself: Do we just need a simple list of values? If so, then we're gonna use an array or a set.
+
+But on the other hand if we need key value pairs, then we need an object or a map. 
+
+The big difference here is that with a key value pair
+
+we have a way of describing the values, so by using the key.
+
+On the other hand, in a list like an array or a set,
+
+we simply have the values without any description.*/
 
 
-//Iteration
+//Arrays vs. Sets
 
-//Quiz app
-console.log(question.get('question'));
+/* You should use arrays whenever you need to store values
 
-for (const [key, value] of question) {
-  if(typeof key === 'number') console.log(`Answer ${key}: ${value}`);
-}
+in order and when these values might contain duplicates.
 
-// const answer = Number(prompt('Your answer'));
-const answer = 3; 
-console.log(answer);
-console.log(question.get(question.get('correct') === answer));
+Also you should always use arrays
+
+when you need to manipulate data
+
+because there are a ton of useful array methods. 
 
 
-//When we need to convert a map to an array
+Sets should only be used when you are working with unique values.
 
-console.log([...question]); //add the [] inside the console.log(), use the ... (spread operator) and voila, you get your array
+You can also use sets in situations
 
-// console.log(question.entries());
-console.log([...question.keys()]);
-console.log([...question.values()]);
+when high performance is really important
+
+because operations like searching for an item
+
+or deleting an item from a set can be
+
+up to 10 times faster in sets than in arrays.
+
+
+One great use case for sets is to remove duplicate values from an array.
+
+Sets are really not meant to replace arrays
+
+but rather to compliment them
+
+whenever we are dealing with unique values.
+*/
+
+
+//Objects vs. Maps
+
+
+/*Maps are way better suited for simple key value stores because they offer better performance.
+
+Also map keys can have any data type and they're also easy to iterate and it's easy to compute the size of a map.
+
+
+The biggest advantage of objects
+
+is probably how easy it is to write them and to access data
+
+by simply using the dot or the brackets operator.
+
+Also most developers are already super used to objects.
+
+And so they simply keep using them
+
+for simple key value stores.
+
+
+
+As a conclusion, you should use maps
+
+when you simply need to map keys to values
+
+and also when you need keys that are not strings.
+
+
+If you need functions as values
+
+then you should absolutely use an object for that.
+
+So in objects, these functions are then called methods
+
+and you can use the this keyword to access properties
+
+of the same object, which is impossible in maps.
+
+Also, when working with JSON data,
+
+you will probably be using objects for that as well
+
+unless you then want to convert the objects to maps.
+ */
 
