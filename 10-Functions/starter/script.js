@@ -1,26 +1,22 @@
 'use strict';
 
-//Functions - Default Parameters
+//Functions - How Passing Arguments Works: Value vs. Reference
 
-const bookings = [];
+const flight = 'LH234';
+const joe = {
+    name: 'Joe Shmo',
+    passport: 5465465135551
+}
 
-const createBooking = function (
-    flightNum,
-    numPassengers = 1,
-    price = 199 * numPassengers
-) {
-    const booking = {
-        flightNum,
-        numPassengers,
-        price,
-    };
-    console.log(booking);
-    bookings.push(booking);
-};
+const checkIn = function(flightNum, passenger) {
+    flightNum = 'LH999';
+    passenger.name = 'Mr.' + passenger.name;
 
-createBooking('LH123');
-createBooking('LH123', 2, 800);
-createBooking('LH123', 2);
-createBooking('LH123', 5);
+    if(passenger.passport === 5465465135551) {
+        alert('Check in successful.')
+    } else alert('Wrong passport!')
+};  
 
-createBooking('LH123', undefined, 1000); //Use UNDEFINED if you don't want to pass a value to a parameter
+checkIn(flight, joe);
+console.log(flight);
+console.log(joe);
