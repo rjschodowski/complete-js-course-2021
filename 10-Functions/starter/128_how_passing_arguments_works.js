@@ -20,3 +20,20 @@ const checkIn = function(flightNum, passenger) {
 checkIn(flight, joe);
 console.log(flight);
 console.log(joe);
+
+//Is the same thing...
+
+const flightNum = flight;
+const passenger = joe;
+
+/*
+
+In summary, passing a primitive type (flightNum in this example) to a function is really just the same as creating a
+
+copy outside of the function. So the value is simply copied.
+
+On the other hand, when we pass an object to a function (passenger in this example), it is really just like copying an object.
+
+So whatever we change in a copy will also happen in the original.
+
+*/
