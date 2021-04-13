@@ -1,84 +1,90 @@
 'use strict'
 
-//Working with Strings Pt. 2
+//Working with Strings Pt. 3
 
 
-//Changing the casing of a string
+//Split method
+//The split() method divides a String into an ordered list of substrings, puts these substrings into an array, and
+//returns the array.
 
-const airline = 'TAP Air Portugal';
+console.log('a+very+nice+day'.split('+')); //returns (4) ["a", "very", "nice", "day"]
+console.log('R.J. Schodowski'.split(' ')); //returns (2) ["R.J.", "Schodowski"]
 
-console.log(airline.toLowerCase());
-console.log(airline.toUpperCase());
+const [firstName, lastName] = 'R.J. Schodowski'.split(' '); //firstName becomes variable that has R.J., and lastName that has Schodowski
 
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' '); //the JOIN method joins each string array item into one combined string with ' ' in between words in this case.
 
-//Fix capitalization in a name
+console.log(newName);
 
-const passenger = 'ROberT';
-const passengerLower = passenger.toLowerCase();  //To fix this we first make the name all lowercase
-const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1); //Then we take the first letter
-//and make it upper case 'R' and add to it the rest of the name 'obert'.
-console.log(passengerCorrect); //Boom!
+const capitalizeName = function(name) {
+    const names = name.split(' ');
+    const namesUpper = [];
 
-
-//Comparing Emails
-
-const email = 'hello@rj.robot.com';
-const loginEmail = '  Hello@rj.roBot.com';
-
-const lowerEmail = loginEmail.toLowerCase();
-const trimmedEmail = lowerEmail.trim();
-console.log(trimmedEmail); //Fixed!
-
-//Here's an even better way to do that in one line of code:
-
-const normalizedEmail = loginEmail.toLowerCase().trim();
-
-console.log(normalizedEmail);
-
-
-//Replacing parts of strings
-
-const priceGB = '288,97£';
-const priceUS = priceGB.replace('£', '$').replace(',', '.');
-
-console.log(priceUS);
-
-
-const announcement = 'All passengers come to door 23. Door 23!';
-console.log(announcement.replace('door', 'gate'));
-
-//For now we'll use a regular expression so that all instances of 'door' will convert to 'gate'
-//Soon replaceAll will be a method we can use to do the same thing, but as of 4/12/21 it doesn't work yet.
-
-console.log(announcement.replace(/door/g, 'gate'));
-
-
-//Booleans
-const plane = 'A320neo';
-console.log(plane.includes('A320'));  //true
-console.log(plane.includes('Boeing'));  //we see this is false, since Boeing is not in the plane name.
-
-console.log(plane.startsWith('Air')); //returns false because the string doesn't start with 'Air'
-
-if(plane.startsWith('A') && plane.endsWith('neo')) {
-  console.log('Part of the NEO family.');
-}
-
-
-//Practice exercise
-
-const checkBaggage = function (items) {
-  const baggage = items.toLowerCase();
-  
-  if (baggage.includes('knife') || baggage.includes('gun')) {
-    console.log('You are NOT allowed to board this plane.');
-  } else {
-    console.log('Welcome aboard!');
-  }
+    for (const n of names) {
+        // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+        //another way you can do this:
+        namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+    }
+console.log(namesUpper.join(' '));
+    
 };
 
-checkBaggage('I got a laptop, Food, and Pocket Knife.');
-checkBaggage('Socks and a camera.');
-checkBaggage('Snacks and a gun.');
+capitalizeName('jessica ann smith davis');
+capitalizeName('ooday schodowski');
+
+
+//Padding a String
+//The padStart() method pads the current string with another string (multiple times, if needed) until the resulting
+//string reaches the given length. The padding is applied from the start of the current string.
+
+const message = 'Go to gate 23!';
+console.log(message.padStart(25, '+')); //returns                  +++++++++++Go to gate 23!
+console.log('rj'.padStart(25, '+')); //returns                     +++++++++++++++++++++++rj
+console.log('abcdefghijklmnopqrstuv'.padStart(25, '+')); //returns +++abcdefghijklmnopqrstuv
+
+//All are 25 spaces in length, and whatever space is left over after the initial string, the + is added until it reaches
+//25 spaces in these examples.
+
+//Now for padEnd()....
+console.log(message.padStart(25, '+').padEnd(35, '+')); //returns +++++++++++Go to gate 23!++++++++++.
+//Now there are 35 total spaces, and to make 35 total, 10 + signs are added to the end of the 
+//'+++++++++++Go to gate 23! string.
+
+
+//Real-World Example: Masking credit card numbers and only displaying the last 4 digits
+
+const maskCreditCard = function (number) {
+    const str = number + ''; //this line of code converts the credit card numbers to strings
+    const last = str.slice(-4);
+    return last.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(84756783));
+console.log(maskCreditCard(84756794858475453));
+console.log(maskCreditCard(74100085599744610));
+
+
+//Repeat Method - repeats the same string x amount of times
+
+const message2 = 'Severe weather...All departures delayed...';
+console.log(message2.repeat(4)); //returns Severe weather...All departures delayed...Severe weather...All departures delayed...Severe weather...All departures delayed...Severe weather...All departures delayed...
+
+
+//Another real world example
+
+const planesInLine = function (n) {
+    console.log(`There are ${n} planes in line ${':)'.repeat(n)}`);
+};
+
+planesInLine(2);
+planesInLine(10);
+planesInLine(4);
+//returns There are 2 planes in line :):)
+// There are 10 planes in line :):):):):):):):):):)
+// There are 4 planes in line :):):):)
+
+
+
+
 
 
